@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {
   BrowserRouter as Router,
-  Switch, Route, Link, useParams
+  Switch, Route, Link, useParams, useHistory
 } from "react-router-dom"
 
 
@@ -59,21 +59,30 @@ const Footer = () => (
     See <a href='https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js'>https://github.com/fullstack-hy2019/routed-anecdotes/blob/master/src/App.js</a> for the source code.
   </div>
 )
-
+let timeOutId 
 const CreateNew = (props) => {
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
+  const history = useHistory()
 
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    history.push('/')
     props.addNew({
       content,
       author,
       info,
       votes: 0
     })
+    if(timeOutId){
+      clearTimeout(timeOutId)
+    }
+    props.setNotification(`an anecdote ${content} by ${author} was succesfully added! `)
+    timeOutId = setTimeout(() => {
+      props.setNotification(null)
+    }, 10000);
   }
 
   return (
@@ -99,6 +108,22 @@ const CreateNew = (props) => {
 
 }
 
+const Notification = ({notification}) => {
+  const style = {
+    border: 'solid',
+    padding: 10,
+    borderWidth: 1,
+  }
+ if(notification === null ){
+   return null
+ } else {
+   return (
+     <div style={style}>{notification}</div>
+   )
+ }
+
+}
+
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
     {
@@ -117,7 +142,7 @@ const App = () => {
     }
   ])
 
-  const [notification, setNotification] = useState('')
+  const [notification, setNotification] = useState(null)
 
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
@@ -142,11 +167,12 @@ const App = () => {
 
   return (
     <Router>
+          <Notification notification={notification} />
           <h1>Software anecdotes</h1>
           <Menu />
       <Switch>
         <Route path="/create-new">
-          <CreateNew addNew={addNew} />
+          <CreateNew addNew={addNew} setNotification={setNotification}/>
         </Route>
         <Route path="/about">
           <About />
