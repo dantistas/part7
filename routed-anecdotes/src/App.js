@@ -94,21 +94,32 @@ const CreateNew = (props) => {
     info.reset();
   }
 
+  
+  
+  const noResetValue = (object) => {
+    const {reset, ...newObject} = object
+    return {
+      ...newObject
+  }
+  }
+
+  
+
   return (
     <div>
       <h2>create a new anecdote</h2>
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input {...content} />
+          <input {...noResetValue(content)} />
         </div>
         <div>
           author
-          <input {...author} />
+          <input {...noResetValue(author)} />
         </div>
         <div>
           url for more info
-          <input {...info} />
+          <input {...noResetValue(info)} />
         </div>
         <button>create</button>
         <button type="reset" value="reset" onClick={clearInputFields}>reset</button>
