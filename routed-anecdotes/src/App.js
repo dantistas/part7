@@ -87,6 +87,12 @@ const CreateNew = (props) => {
       props.setNotification(null)
     }, 10000);
   }
+  
+  const clearInputFields = () => {
+    content.reset();
+    author.reset();
+    info.reset();
+  }
 
   return (
     <div>
@@ -105,6 +111,7 @@ const CreateNew = (props) => {
           <input {...info} />
         </div>
         <button>create</button>
+        <button type="reset" value="reset" onClick={clearInputFields}>reset</button>
       </form>
     </div>
   )
