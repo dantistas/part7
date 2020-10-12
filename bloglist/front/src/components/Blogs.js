@@ -4,7 +4,7 @@ import blogService from '../services/blogs'
 
 
 
-const Blogs = ({blogs, user, setBlogs, store, setErrorMessage, blog , deletePost}) => {
+const Blogs = ({blogs, user, store, setErrorMessage, blog, deleteBlogPost}) => {
   const [visible, setVisible] = useState(false)
   const [likes, setLikes] = useState(blog.likes)
 
@@ -18,8 +18,7 @@ const Blogs = ({blogs, user, setBlogs, store, setErrorMessage, blog , deletePost
     if(toDelete.userID === user.id){
       const ok = window.confirm(`Delete: ${toDelete.title} by ${toDelete.author} ?`)
     if(ok){
-      blogService.remove(id)
-      setBlogs(blogs.filter(b => b.id !== id))
+      store.dispatch(deleteBlogPost(id))
       store.dispatch(setErrorMessage(`a blog: ${toDelete.title} by: ${toDelete.author} was deleted!`, 3000))
      }
     }else{

@@ -4,9 +4,11 @@ import blogService from '../services/blogs'
 const blogsReducer = (state = [] , action) => {
     switch(action.type) {
         case 'CREATE_NEW_BLOG':
-            return state.concat(action.data)  
+            return state = state.concat(action.data)  
         case 'INIT_BLOGS':
             return state = action.data 
+        case 'DELETE_BLOG_POST':
+            return state = state.filter(blog => blog.id !== action.data)
             
         default:
             return state 
@@ -38,5 +40,19 @@ export const initializeBlogs = () => {
       )
     } 
   }
+
+
+export const  deleteBlogPost = (id) => {
+    return async dispatch => {
+        await blogService.remove(id)
+        dispatch(
+            {
+                type:'DELETE_BLOG_POST',
+                data:id
+            }
+        )
+    }
+}
+
 
 export default blogsReducer

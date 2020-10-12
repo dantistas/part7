@@ -9,7 +9,7 @@ import Notification from './components/Notification'
 import {setNotification, setErrorMessage} from './reducers/notificationReducer'
 import store from './store'
 import BlogForm from './components/BlogForm'
-import { initializeBlogs, createNewBlog } from './reducers/blogsReducer'
+import { initializeBlogs, createNewBlog , deleteBlogPost} from './reducers/blogsReducer'
 
 
 Togglable.propTypes = {
@@ -113,7 +113,7 @@ const App = () => {
           <BlogForm blogs={blogs} store={store} setNotification={setNotification} createNewBlog={createNewBlog}/>
           <div id='all-blogs'>
               {blogs.map(blog =>
-                <Blogs  key={blog.id} blog={blog} blogs={blogs} user={user} store={store} setErrorMessage={setErrorMessage}/>
+                <Blogs  key={blog.id} blog={blog} blogs={blogs} user={user} store={store} setErrorMessage={setErrorMessage} deleteBlogPost={deleteBlogPost}/>
               )}
           </div>
         </div>
