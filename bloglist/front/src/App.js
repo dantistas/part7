@@ -4,12 +4,12 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import Togglable from './components/Togglable'
 import PropTypes from 'prop-types'
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import Notification from './components/Notification'
 import {setNotification, setErrorMessage} from './reducers/notificationReducer'
 import store from './store'
 import BlogForm from './components/BlogForm'
-
+import { initializeBlogs, createNewBlog } from './reducers/blogsReducer'
 
 
 Togglable.propTypes = {
@@ -18,17 +18,20 @@ Togglable.propTypes = {
 
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const notification = useSelector(state => state)
+  const blogs = useSelector(state => state.blogs)
+  const notification = useSelector(state => state.notification)
   const [user, setUser] = useState(null)
+  const dispatch = useDispatch()
+
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )
-  }, [])
+    dispatch(initializeBlogs())
+  }, [dispatch])
+
+  
+
   blogs.sort(function (a, b) {
     return b.likes - a.likes
   })
@@ -101,16 +104,16 @@ const App = () => {
   return (
     <div>
       <Notification notification={notification} />
-      <h2>Blog app</h2> 
+      <h2>Blog app</h2>
       {user === null ?
         loginForm() :
         <div>
           <p>Logged in as {user.name}</p>
           <button id="logout-button" onClick={logOut}>log out</button>
-          <BlogForm blogs={blogs} setBlogs={setBlogs} store={store} setNotification={setNotification}/>
+          <BlogForm blogs={blogs} store={store} setNotification={setNotification} createNewBlog={createNewBlog}/>
           <div id='all-blogs'>
               {blogs.map(blog =>
-                <Blogs  key={blog.id} blog={blog} blogs={blogs} user={user} setBlogs={setBlogs} store={store} setErrorMessage={setErrorMessage}/>
+                <Blogs  key={blog.id} blog={blog} blogs={blogs} user={user} store={store} setErrorMessage={setErrorMessage}/>
               )}
           </div>
         </div>

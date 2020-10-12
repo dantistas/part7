@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import blogService from '../services/blogs'
 import Togglable from './Togglable'
 
 
 
 
-const BlogForm = ({blogs, setBlogs, store, setNotification}) => {
+const BlogForm = ({store, setNotification, createNewBlog}) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
@@ -18,9 +17,8 @@ const BlogForm = ({blogs, setBlogs, store, setNotification}) => {
                 url: url
               }
         e.preventDefault()
-        const returnedBlog = await blogService.create(blogObject)
-        setBlogs(blogs.concat(returnedBlog))
-        store.dispatch(setNotification(`a new blog: ${returnedBlog.title} by: ${returnedBlog.author} was created!`, 3000))
+        store.dispatch(createNewBlog(blogObject))
+        store.dispatch(setNotification(`a new blog: ${title} by: ${author} was created!`, 3000))
         setTitle('')
         setAuthor('')
         setUrl('')
