@@ -8,15 +8,6 @@ const LoginForm = ({store, setUser, setErrorMessage}) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    useEffect(() => {
-      const loggedUserJson = window.localStorage.getItem('loggedUser')
-      if(loggedUserJson){
-        const user = JSON.parse(loggedUserJson)
-        setUser(user)
-        blogService.setToken(user.token)
-      }
-    },[setUser(null)])
-
 
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -26,7 +17,7 @@ const LoginForm = ({store, setUser, setErrorMessage}) => {
           })
           window.localStorage.setItem('loggedUser', JSON.stringify(user))
           blogService.setToken(user.token)
-          setUser(user)
+          store.dispatch(setUser(user))
           setUsername('')
           setPassword('')
         }catch(exception){
