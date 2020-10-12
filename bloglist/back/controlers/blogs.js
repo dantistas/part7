@@ -59,6 +59,7 @@ blogsRouter.delete('/:id', async (req, res , next )=>{
 })
 
 blogsRouter.put('/:id', async (req, res , next)=>{
+    console.log('backend: ', req.params.id )
     await Blog.update({"_id": objectId(req.params.id)},{$inc :{"likes": +1}})
     res.sendStatus(200).end()
     

@@ -1,9 +1,10 @@
 import React, { useState }  from 'react'
+import blogService from '../services/blogs'
 
 
 
 
-const Blog = ({ blog , deletePost, onClickLikePost }) => {
+const Blogs = ({blogs, user, setBlogs, store, setErrorMessage, blog , deletePost}) => {
   const [visible, setVisible] = useState(false)
   const [likes, setLikes] = useState(blog.likes)
 
@@ -11,6 +12,27 @@ const Blog = ({ blog , deletePost, onClickLikePost }) => {
   const showWhenVisible = { display: visible ? '' : 'none' }
 
 
+
+  const deleteBlog = (id) => {
+    const toDelete = blogs.find(b => b.id === id)
+    if(toDelete.userID === user.id){
+      const ok = window.confirm(`Delete: ${toDelete.title} by ${toDelete.author} ?`)
+    if(ok){
+      blogService.remove(id)
+      setBlogs(blogs.filter(b => b.id !== id))
+      store.dispatch(setErrorMessage(`a blog: ${toDelete.title} by: ${toDelete.author} was deleted!`, 3000))
+     }
+    }else{
+      store.dispatch(setErrorMessage(`a blog: ${toDelete.title} by: ${toDelete.author} was NOT deleted! because you are not creator `, 3000))
+    }
+    
+  }
+
+
+  const onClickLikePost = (id) => {
+    blogService.like(id)
+    
+  }
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -49,12 +71,12 @@ const Blog = ({ blog , deletePost, onClickLikePost }) => {
         <div className={'author-class'}>
           author: {blog.author}
         </div>
-        <button id="delete-button" onClick={() => deletePost(blog.id)}>delete</button>
+        <button id="delete-button" onClick={() => deleteBlog(blog.id)}>delete</button>
       </div>
     </div>
   )
 }
 
-export default Blog
+export default Blogs
 
 
