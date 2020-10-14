@@ -12,6 +12,7 @@ import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
 import LoginForm from './components/LoginForm'
 import Users from './components/Users'
+import User from './components/User'
 
 import blogService from './services/blogs'
 
@@ -93,8 +94,11 @@ const padding = {
         </div>
       }
       <Switch>
+        <Route path='/users/:id'>
+          <User users={users}/>
+        </Route>
         <Route path='/users'>
-          <Users users={users}/>
+          <Users users={users} Link={Link}/>
         </Route>
         <Route path='/'>
         {user !== null ? 

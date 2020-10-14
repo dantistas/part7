@@ -2,7 +2,7 @@ import React from 'react'
 
 
 
-const Users = ({users}) => {
+const Users = ({users, Link}) => {
 
     if (users === null ){
         return (
@@ -24,7 +24,7 @@ const Users = ({users}) => {
                     {users.map(user => 
                         <tbody key={user.id}>
                             <tr>
-                                <th>{user.name}</th>
+                                <th><Link to={`users/${user.id}`}>{user.name}</Link></th>
                                 <th>{user.blogs.length}</th>
                             </tr>
                         </tbody> )}  
