@@ -1,16 +1,16 @@
 import usersService from '../services/users'
 
 const userReducer = ( state = {
-                                user:null,
-                                users:null
+                                loggedInUser:null,
+                                allUsers:null
                                             } , action) => {
     switch(action.type) {
         case 'SET_USERS':
-            return {...state, users: action.data}
+            return {...state, allUsers: action.data}
         case 'INIT_USERS':
-            return {...state, users: action.data}
+            return {...state, allUsers: action.data}
         case 'SET_USER':
-            return {...state, user: action.data}
+            return {...state, loggedInUser: action.data}
         default:
             return state   
     }

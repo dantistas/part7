@@ -35,8 +35,8 @@ Togglable.propTypes = {
 const App = () => {
   const blogs = useSelector(state => state.blogs)
   const notification = useSelector(state => state.notification)
-  const user = useSelector(state => state.users.user)
-  const users = useSelector(state => state.users.users)
+  const user = useSelector(state => state.users.loggedInUser)
+  const users = useSelector(state => state.users.allUsers)
   
   const dispatch = useDispatch()
 
