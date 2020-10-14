@@ -1,7 +1,7 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState} from 'react'
 import blogService from '../services/blogs'
 import loginService from '../services/login'
-//veliau sita sutvarkysim su tou effectu
+//veliau sita sutvarkysim su tou effectu "memory leak"
 
 
 const LoginForm = ({store, setUser, setErrorMessage}) => {
