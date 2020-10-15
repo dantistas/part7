@@ -121,7 +121,7 @@ const padding = {
           <User users={users}/>
         </Route>
         <Route path='/blogs/:id'>
-          <Blog blogs={blogs} initializeBlogs={initializeBlogs} blogService={blogService} store={store} user={user} setErrorMessage={setErrorMessage} deleteBlogPost={deleteBlogPost}/>
+          <Blog blogs={blogs} setNotification={setNotification} initializeBlogs={initializeBlogs} blogService={blogService} store={store} user={user} setErrorMessage={setErrorMessage} deleteBlogPost={deleteBlogPost}/>
         </Route>
         <Route path='/users'>
           <Users users={users} Link={Link}/>
