@@ -5,7 +5,7 @@ import {
   } from "react-router-dom"
 
 
-const Blog = ({blogs, blogService, store, setErrorMessage, deleteBlogPost, user}) => {  
+const Blog = ({blogs, blogService, store, setErrorMessage, deleteBlogPost, user, initializeBlogs}) => {  
     const id = useParams().id
     const history = useHistory()
 
@@ -30,6 +30,7 @@ const Blog = ({blogs, blogService, store, setErrorMessage, deleteBlogPost, user}
 
     const onClickLikePost = (id) => {
         blogService.like(id)
+        store.dispatch(initializeBlogs())
         
       }
 
@@ -40,13 +41,12 @@ const Blog = ({blogs, blogService, store, setErrorMessage, deleteBlogPost, user}
     } else {
        return (
         <div>
-            <button onClick={()=>{history.push('/')}}>Back</button>
-            <h1>{blog.title}. {blog.author}</h1>
+            <h2>{blog.title}. {blog.author}</h2>
             <a href={`https://${blog.url}`}>{blog.url}</a>
             <div className={'likes-class'} id="likes-div">
-                likes: {likes} <button id="like-button" onClick={() => { onClickLikePost(blog.id); setLikes(likes+1) }}>like</button>
+                likes: {likes} <button id="like-button" onClick={() => { onClickLikePost(blog.id); setLikes(likes+1) }}>like</button> <button id="delete-button" onClick={() => deleteBlog(blog.id)}>delete</button> <button onClick={()=>{history.push('/')}}>Back</button>
             </div>
-            <button id="delete-button" onClick={() => deleteBlog(blog.id)}>delete</button> 
+             
             <p>added by: {blog.user[0].name}</p>
         </div>
     )

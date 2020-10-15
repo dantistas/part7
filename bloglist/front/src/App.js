@@ -15,6 +15,8 @@ import LoginForm from './components/LoginForm'
 import Users from './components/Users'
 import User from './components/User'
 
+import styled from 'styled-components'
+
 import blogService from './services/blogs'
 
 import PropTypes from 'prop-types'
@@ -35,12 +37,27 @@ Togglable.propTypes = {
   buttonLabel: PropTypes.string.isRequired
 }
 
+const Navigation = styled.div`
+  background: BurlyWood;
+  padding: 1em;
+`
+const Button = styled.button`
+  background: Bisque;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid Chocolate;
+  border-radius: 3px;
+`
 
 const App = () => {
   const blogs = useSelector(state => state.blogs)
   const notification = useSelector(state => state.notification)
   const user = useSelector(state => state.users.loggedInUser)
   const users = useSelector(state => state.users.allUsers)
+
+
+
   
   const dispatch = useDispatch()
 
@@ -69,6 +86,7 @@ const App = () => {
   })
 
 
+
   const logOut = () => {
 
     window.localStorage.clear()
@@ -85,23 +103,25 @@ const padding = {
   return (
     <Router>
       <div>
-        <Link style={padding} to='/'>Home</Link>
-        <Link style={padding} to='/users'>Users</Link>
+        <Navigation>
+            <Link style={padding} to='/'>Home</Link>
+            <Link style={padding} to='/users'>Users</Link>
+            {user === null ? <LoginForm store={store} setUser={setUser} setErrorMessage={setErrorMessage}/> : 
+                [
+                  <em key={user.id}>Logged in as {user.name}</em>,
+                  <Button key={`${user.name} + ${user.id}`}onClick={logOut}>log out</Button>
+                ] 
+            }  
+        </Navigation>
       </div>
       <Notification notification={notification} />
-      <h2>Blog app</h2>
-      {user === null ? <LoginForm store={store} setUser={setUser} setErrorMessage={setErrorMessage}/> : 
-        <div>
-          <p>Logged in as {user.name}</p>
-          <button id="logout-button" onClick={logOut}>log out</button>
-        </div>
-      }
+      <h1>Blog app</h1>
       <Switch>
         <Route path='/users/:id'>
           <User users={users}/>
         </Route>
         <Route path='/blogs/:id'>
-          <Blog blogs={blogs} blogService={blogService} store={store} user={user} setErrorMessage={setErrorMessage} deleteBlogPost={deleteBlogPost}/>
+          <Blog blogs={blogs} initializeBlogs={initializeBlogs} blogService={blogService} store={store} user={user} setErrorMessage={setErrorMessage} deleteBlogPost={deleteBlogPost}/>
         </Route>
         <Route path='/users'>
           <Users users={users} Link={Link}/>
