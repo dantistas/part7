@@ -7,6 +7,7 @@ import {
 } from "react-router-dom"
 
 import Blogs from './components/Blogs'
+import Blog from './components/Blog'
 import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
@@ -25,6 +26,8 @@ import {setUser, setUsers} from './reducers/userReducer'
 
 import store from './store'
 
+
+//kai sukuriu bloga state neuzsiupdatina created blogs
 
 
 
@@ -97,6 +100,9 @@ const padding = {
         <Route path='/users/:id'>
           <User users={users}/>
         </Route>
+        <Route path='/blogs/:id'>
+          <Blog blogs={blogs} blogService={blogService} store={store} user={user} setErrorMessage={setErrorMessage} deleteBlogPost={deleteBlogPost}/>
+        </Route>
         <Route path='/users'>
           <Users users={users} Link={Link}/>
         </Route>
@@ -107,7 +113,7 @@ const padding = {
               <BlogForm blogs={blogs} store={store} setNotification={setNotification} createNewBlog={createNewBlog}/>
               <div id='all-blogs'>
                   {blogs.map(blog =>
-                    <Blogs  key={blog.id} blog={blog} blogs={blogs} user={user} store={store} setErrorMessage={setErrorMessage} deleteBlogPost={deleteBlogPost}/>
+                    <Blogs Link={Link} key={blog.id} blog={blog} blogs={blogs} user={user} store={store} setErrorMessage={setErrorMessage} deleteBlogPost={deleteBlogPost}/>
                   )}
               </div>
             </div>

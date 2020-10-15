@@ -10,7 +10,7 @@ const BlogForm = ({store, setNotification, createNewBlog}) => {
   const [url, setUrl] = useState('')
 
 
-    const createBlog = async (e) => {
+    const createBlog = (e) => {
       const blogObject = {
                 title: title, 
                 author: author, 
