@@ -7,13 +7,13 @@ const Users = ({users, Link}) => {
     if (users === null ){
         return (
             <div>
-                <p>there is no users</p>
+                <p className="title">there is no users</p>
             </div>
         )
     } else {
         return (
             <div>
-                <h1>Users</h1>
+                <h1 className="title">Users</h1>
                 <table>
                     <thead>
                         <tr>

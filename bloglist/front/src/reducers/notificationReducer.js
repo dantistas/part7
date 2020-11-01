@@ -17,13 +17,7 @@ let timeoutId
 
 export const setNotification = (content , timeout) => {
     const style = {
-        'color': 'green',
-        'background': 'lightgrey',
-        'size': '20px',
-        'border': 'solid',
-        'radius': '5px',
-        'padding': '10px',
-        'margin': '10px',
+        'color': 'green'
       }
     
     return async dispatch => {
@@ -49,13 +43,7 @@ export const setNotification = (content , timeout) => {
 export const setErrorMessage = (content , timeout) => {
 
     const style = {
-        'color': 'red',
-        'background': 'lightgrey',
-        'size': '20px',
-        'border': 'solid',
-        'radius': '5px',
-        'padding': '10px',
-        'margin': '10px',
+        'color': 'red'
       }
 
     return async dispatch => {
@@ -77,4 +65,20 @@ export const setErrorMessage = (content , timeout) => {
     }
 }
 
+
+
+export const setNotificationNull = () => {
+    return async dispatch => {
+        if(timeoutId){
+            clearTimeout(timeoutId)
+            await dispatch({
+                type:'NOTIFICATION_NULL'
+            })
+        }else{
+            dispatch({
+                type:"NOTIFICATION_NULL"
+            })
+        }
+    }
+}
 export default notificationReducer

@@ -10,17 +10,21 @@ const Togglable = (props) => {
     setVisible(!visible)
   }
 
+
   return (
     <div>
       <div style={hideWhenVisible}>
-        <button onClick={toggleVisibility} id="reveal-blog-form">{props.buttonLabel}</button>
+        <button className="button is-link" onClick={toggleVisibility}>{props.buttonLabel}</button>
       </div>
       <div style={showWhenVisible}>
-        {props.children}
-        <button onClick={toggleVisibility}>cancel</button>
+        <div className="buttons is-right">
+          <button className="delete is-large" onClick={toggleVisibility}></button> 
+        </div>
+        {props.children}  
       </div>
     </div>
   )
 }
 
 export default Togglable
+

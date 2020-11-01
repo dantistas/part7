@@ -1,17 +1,25 @@
 import React from 'react'
 
 
-const Notification = ({notification}) => {
+const Notification = ({notification, setNotificationNull , store}) => {
       
     if(notification === null ){
         return null
-    }  else {
+    }  else if(notification.style.color === "green"){
         return (
-            <div style={notification.style}>
-                {notification.content}
+            <div className="notification is-success has-text-centered">
+                <button className="delete" onClick={()=>{store.dispatch(setNotificationNull())}}></button>
+                <strong>{notification.content}</strong> 
             </div>
         )
-    } 
+    } else if(notification.style.color === "red"){
+        return (
+            <div className="notification is-danger has-text-centered">
+                <button className="delete" onClick={()=>{store.dispatch(setNotificationNull())}}></button>
+                <strong>{notification.content}</strong> 
+            </div>
+        )
+    }
 
 }
 

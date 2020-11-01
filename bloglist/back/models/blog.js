@@ -13,7 +13,8 @@ const blogSchema = mongoose.Schema({
     userID: String,
     user:[
       {type: mongoose.Schema.Types.ObjectId,ref: 'User'}
-    ]
+    ],
+    comments:[Object]
   })
   
   

@@ -31,7 +31,8 @@ blogsRouter.post('/', async  (req, res, next)=>{
             url:body.url,
             likes:body.likes || 0,
             userID: user._id,
-            user: user._id
+            user: user._id,
+            comments:[]
         })
     const savedBlog = await blog.save()
     user.blogs = user.blogs.concat(savedBlog._id)
@@ -42,11 +43,11 @@ blogsRouter.post('/', async  (req, res, next)=>{
 })
 
 
-blogsRouter.post('/:id', async (req, res , next)=>{
-    await Blog.updateOne({"_id": objectId(req.params.id)},{$set :{"likes": 0}})
-    res.sendStatus(200).end()
+// blogsRouter.post('/:id', async (req, res , next)=>{
+//     await Blog.updateOne({"_id": objectId(req.params.id)},{$set :{"likes": 0}})
+//     res.sendStatus(200).end()
     
-})
+// })
 
 
 blogsRouter.delete('/:id', async (req, res , next )=>{
@@ -65,8 +66,14 @@ blogsRouter.put('/:id', async (req, res , next)=>{
     
 })
 
-blogsRouter.post('/api/users', async (req , res , next)=> {
-    
+blogsRouter.post(`/:id/`, async (req , res , next)=> {
+
+    const comment = req.body
+    const id = req.params.id
+    console.log('backende: komentaras',comment)
+    console.log('backende: id',id)
+    await Blog.findOneAndUpdate({"_id": objectId(id)},{$push:{comments:comment}})
+    res.sendStatus(200).end
 })
 
 

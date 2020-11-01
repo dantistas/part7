@@ -9,7 +9,6 @@ const blogsReducer = (state = [] , action) => {
             return state = action.data 
         case 'DELETE_BLOG_POST':
             return state = state.filter(blog => blog.id !== action.data)
-            
         default:
             return state 
     }
@@ -53,6 +52,5 @@ export const  deleteBlogPost = (id) => {
         )
     }
 }
-
 
 export default blogsReducer
